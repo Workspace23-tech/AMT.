@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        .data-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            max-width: 300px;
+        }
+        .table th {
+            background-color: #f8f9fa;
+        }
+        .action-buttons .btn {
+            margin: 0 2px;
+        }
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Maharashtra Driver Services</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="user_form.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="user_data.html">Manage Users</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="data-container">
+        <div class="table-container">
+            <div class="header-section">
+                <h2>User Data Management</h2>
+                <div class="d-flex gap-3">
+                    <div class="search-box">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search users...">
+                    </div>
+                    <button class="btn btn-primary" onclick="exportToCSV()">
+                        <i class="bi bi-download"></i> Export to CSV
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Registration Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="noDataMessage" class="no-data" style="display: none;">
+                No user data available
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load and display user data
+        function loadUserData() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const tableBody = document.getElementById('userTableBody');
+            const noDataMessage = document.getElementById('noDataMessage');
+
+            if (users.length === 0) {
+                tableBody.innerHTML = '';
+                noDataMessage.style.display = 'block';
+                return;
+            }
+
+            noDataMessage.style.display = 'none';
+            tableBody.innerHTML = '';
+
+            users.forEach((user, index) => {
+                const tr = document.createElement('tr');
+                
+                // Add data cells
+                tr.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.phone}</td>
+                    <td>${user.email}</td>
+                    <td>${user.address}</td>
+                    <td>${user.date}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-info" onclick="viewUser(${index})">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser(${index})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.getElementById('userTableBody').getElementsByTagName('tr');
+
+            for (let row of rows) {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            }
+        });
+
+        // Export to CSV
+        function exportToCSV() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.length === 0) {
+                alert('No data to export!');
+                return;
+            }
+
+            // Create CSV content
+            const headers = ['Name', 'Phone', 'Email', 'Address', 'Registration Date'];
+            const csvContent = [
+                headers.join(','),
+                ...users.map(user => [
+                    user.name,
+                    user.phone,
+                    user.email,
+                    user.address,
+                    user.date
+                ].join(','))
+            ].join('\n');
+
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'user_data.csv';
+            link.click();
+        }
+
+        // View user details
+        function viewUser(index) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users[index];
+            
+            if (user) {
+                alert(`
+                    Name: ${user.name}
+                    Phone: ${user.phone}
+                    Email: ${user.email}
+                    Address: ${user.address}
+                    Registration Date: ${user.date}
+                `);
+            }
+        }
+
+        // Delete user
+        function deleteUser(index) {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUserData();
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
+</body>
+</html> 
