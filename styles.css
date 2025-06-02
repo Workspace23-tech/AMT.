@@ -1,0 +1,207 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* City Cards */
+.city-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+}
+
+.city-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.city-card .card-body {
+    padding: 1.25rem;
+}
+
+/* Contact Section */
+.qr-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Calculator Section */
+.calculator-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 50px;
+    padding: 30px 0;
+    background-color: #343a40;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #17a2b8;
+    text-decoration: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .city-card {
+        margin-bottom: 15px;
+    }
+    
+    .qr-section, .calculator-section {
+        margin-top: 20px;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    transition: all 0.3s ease;
+    padding: 8px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    transform: translateY(-2px);
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Results Display */
+#fareResult, #dailyFareResult {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid #dee2e6;
+}
+
+#fareResult h4, #dailyFareResult h4 {
+    color: #0d6efd;
+    margin-bottom: 15px;
+}
+
+/* Navbar Styles */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* QR Code Container */
+#qrCodeContainer {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+#qrCodeContainer img {
+    max-width: 150px;
+    height: auto;
+}
+
+/* Additional styles for better organization */
+.card {
+    box-shadow: 0 2px 4px rgba(241, 56, 56, 0.05);
+}
+
+.qr-button {
+    background-color: #FF8C00;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.qr-button:hover {
+    background-color: #FF6B00;
+}
+
+/* User Information Form Styles */
+#userInfoForm {
+    max-width: 100%;
+}
+
+#userInfoForm .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 10px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#userInfoForm .form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#userInfoForm .form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+#userInfoForm .btn-primary {
+    padding: 10px 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#userInfoForm .card {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+#userInfoForm .card-header {
+    border-bottom: none;
+    padding: 20px;
+}
+
+#userInfoForm .card-body {
+    padding: 30px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #userInfoForm .card-body {
+        padding: 20px;
+    }
+} 
